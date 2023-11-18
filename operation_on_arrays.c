@@ -20,6 +20,7 @@ int indInsert(int* arr, int size, int element, int index, int capacity){
     return 1;
 }
 
+// Deletion is done like this: 
 void indDelete(int* arr, int size, int index){
     for(int i = index; i < size-1; i++){
         arr[i] = arr[i+1];
@@ -52,5 +53,6 @@ int main(){
     indDelete(arr, size, index);
     size -= 1;
     showArray(arr, size);
+    
     return 0;
 }
