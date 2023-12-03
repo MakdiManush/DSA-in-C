@@ -230,11 +230,50 @@
 //     return 0;
 // }
 
-// Add two two-dimensional arrays using pointers----------------------------------
+// // Add two two-dimensional arrays using pointers----------------------------------
+// #include<stdio.h>
+
+// void create_array(int arr[3][3]){
+//     int* ptr = &arr[0][0];
+//     for(int i = 0; i < 3; i++){
+//         for(int j = 0; j < 3; j++){
+//             printf("Enter element for row %d, column %d: \n", i, j);
+//             scanf("%d", &arr[i][j]);
+//         }
+//     }
+// }
+
+// void sum_array(int arr[3][3], int arr2[3][3]){
+//     for(int i = 0; i < 3; i++){
+//         for(int j = 0; j < 3; j++){
+//             printf("%d ", arr[i][j]+arr2[i][j]);
+//         }
+//         printf("\n");
+//     }
+// }
+
+// int main(){
+//     int arr[3][3];
+//     int arr2[3][3];
+//     printf("Input for Array 1:\n");
+//     create_array(arr);
+//     printf("\n");
+
+//     printf("Input for Array 2:\n");
+//     create_array(arr2);
+//     printf("\n");
+    
+//     printf("Sum of both the Arrays:\n");
+//     sum_array(arr, arr2);
+
+//     return 0;
+// }
+
+
+// Multiplying two two-dimensional arrays using pointers----------------------------------
 #include<stdio.h>
 
 void create_array(int arr[3][3]){
-    int* ptr = &arr[0][0];
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
             printf("Enter element for row %d, column %d: \n", i, j);
@@ -243,10 +282,15 @@ void create_array(int arr[3][3]){
     }
 }
 
-void sum_array(int arr[3][3], int arr2[3][3]){
-    for(int i = 0; i < 3; i++){
+void multiply_array(int arr[3][3], int arr2[3][3]){
+    int sum = 0;
+    for(int k = 0; k < 3; k++){
         for(int j = 0; j < 3; j++){
-            printf("%d ", arr[i][j]+arr2[i][j]);
+            for(int i = 0; i < 3; i++){
+                sum += arr[k][i]*arr2[i][j];
+            }
+            printf("%d ", sum);
+            sum = 0;
         }
         printf("\n");
     }
@@ -263,8 +307,62 @@ int main(){
     create_array(arr2);
     printf("\n");
     
-    printf("Sum of both the Arrays:\n");
-    sum_array(arr, arr2);
+    printf("Product of both the Arrays:\n");
+    multiply_array(arr, arr2);
 
     return 0;
 }
+
+// ---------------------Alternate to the above question, using proper pointers -------------
+#include<stdio.h>
+
+void create_array(int arr[3][3]){
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            printf("Enter element for row %d, column %d: \n", i, j);
+            scanf("%d", &arr[i][j]);
+        }
+    }
+}
+
+void multiply_array(int arr1[3][3], int arr2[3][3]){
+    int result[3][3] = {0}; // Initialize the result matrix to zero
+    
+    // Using pointers for multiplication
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            int sum = 0;
+            for(int k = 0; k < 3; k++){
+                sum += (*(*(arr1 + i) + k)) * (*(*(arr2 + k) + j));
+            }
+            *(*(result + i) + j) = sum;
+        }
+    }
+
+    // Print the result
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            printf("%d ", result[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+int main(){
+    int arr1[3][3];
+    int arr2[3][3];
+
+    printf("Input for Array 1:\n");
+    create_array(arr1);
+    printf("\n");
+
+    printf("Input for Array 2:\n");
+    create_array(arr2);
+    printf("\n");
+    
+    printf("Product of both the Arrays:\n");
+    multiply_array(arr1, arr2);
+
+    return 0;
+}
+// -------------------------------------------------------------------
