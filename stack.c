@@ -59,6 +59,14 @@ void traverseStack(struct stack* ptr){
     }
 }
 
+int stackTop(struct stack* ptr){
+    return ptr->arr[ptr->top];
+}
+
+int bottomStack(struct stack* ptr){
+    return ptr->arr[0];
+}
+
 int main(){
     struct stack* s = (struct stack*)malloc(sizeof(struct stack));
     s->size = 80;
@@ -90,6 +98,15 @@ int main(){
     printf("\n");
 
     printf("The Element at given index is: %d\n", peek(s, 3));
+
+    // Stack Top
+    printf("%d is the top most element of the stack.\n", stackTop(s));
+
+    // Stack Bottom
+    printf("%d is the bottom most element of the stack.\n", bottomStack(s));
+
+
+    
     // Free the allocated memory once the program has executed completely
     free(s->arr);
     free(s);
