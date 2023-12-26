@@ -26,6 +26,25 @@ void pop(struct Stack* st){
     st->top--;
 }
 
+// Checking Different Types of Brackets
+int conditionCheck(struct Stack* st, char element){
+    if(element == ')' && st->exp[st->top] == '('){
+        return 1;
+    }
+    else if(element == ']' && st->exp[st->top] == '['){
+        return 1;
+    }
+    else if(element == '}' && st->exp[st->top] == '{'){
+        return 1;
+    }
+    else if(element == '>' && st->exp[st->top] == '<'){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
 int parenthesisMatch(char* expIn){
     struct Stack* st = (struct Stack*)malloc(sizeof(struct Stack));
     st->size = 50;
@@ -42,7 +61,14 @@ int parenthesisMatch(char* expIn){
                 printf("Stack Underflow!\n");
                 return 1;
             }
-            pop(st);
+            
+            if(conditionCheck(st, expIn[i])){
+                pop(st);
+            }
+            else{
+                printf("Pop Not Successfull!, Parenthesis Mismatch\n");
+                return 1;
+            }
         }
     }
     if(isEmpty(st)){
@@ -54,7 +80,9 @@ int parenthesisMatch(char* expIn){
 }
 
 int main(){
-    char* expIn = "(3*2-((8+1)))";
+    char* expIn = "{[24][3*2]-(8+1)}"; // Balanced
+    // char* expIn = "{[24][3*2]-(8+1)}}"; // Underflow
+    // char* expIn = "{[24][{3*2]-(8+1)}"; // Mismatch
     if(parenthesisMatch(expIn) == 1){
         printf("The expression is Unbalanced\n");
     }
